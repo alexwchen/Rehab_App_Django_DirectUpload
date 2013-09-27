@@ -1,0 +1,92 @@
+<html>
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+		<meta charset="utf-8">
+        <title>Registration Form</title>
+		<meta name="description" content="Creating a 16 columns Grid with Twitter Bootstrap. Learn with examples to create a Grid System in Twitter Bootstrap."> 
+		<link href="/static_media_alex/bootstrap.css" rel="stylesheet"> 
+
+		<!-- Harrison Style -->
+		<link href="/static_media_alex/registration_login/register.css" rel="stylesheet" type="text/css" />
+		
+		
+    </head>
+    <style type="text/css">
+        ul.errorlist {
+            margin: 0;
+            padding: 0;
+        }
+        .errorlist li {
+            background-color: #FF9933;
+            color: white;
+            display: black;
+            font-size: 20px;
+            margin: 0 0 3px;
+            padding: 4px 5px;
+        }
+    </style>
+
+    <body>
+		<div class = "container">
+			
+			<!-- LOGO + Title -->
+			<div class = "row">
+				<div class='span3'>
+					<img border = "0" src = "/static_media_alex/Rehab_logo.jpeg" width = "250" height = "180">
+				</div>
+				<div class = "span9">
+					<div id='rehab_title'> <!-- IATSL -->
+						<b><em>I.A.T.S.L.</em></b>
+						<br>
+						<br>
+						<p id="title"> <!-- full name of IATSL -->
+							Intelligent Assistive Technology and System Lab
+						</p>
+					</div>
+				</div>	
+			</div>
+			
+			<div class="span12 span12_box"> 					
+				<div class="field_pos">
+	    			<form action="/portal/register" method="post">				
+						{% csrf_token %}	
+			        	<div class="field"> 
+				            <label for="id_username" class="field_font">Username:</label>
+				            {{ form.username }}
+							<span class="help-inline">{{ form.username.errors }}</span>
+				        </div>
+
+				        <div class="field">
+				            <label for="id_email" class="field_font">Your e-mail address:</label>
+				            {{ form.email }}
+							<span class="help-inline">{{ form.email.errors }}</span>
+				        </div>
+
+				        <div class="field">
+				            <label for="id_password1" class="field_font">Password:</label>
+				            {{ form.password1 }}
+							<span class="help-inline">{{ form.password1.errors }}</span>
+				        </div>
+
+				        <div class="field">
+				            <label for="id_password2" class="field_font">Password Confirmation:</label>
+				            {{ form.password2 }} 
+							<span class="help-inline">{{ form.password2.errors }}</span>
+				        </div>
+		
+				        <div class="field">
+				            <label for="id_gender" class="field_font">Gender : 
+								<span class="help-inline">{{ form.gender.errors }}</span> 
+							</label>
+				            {{ form.gender }}
+				        </div>
+				        <input style="width:300px" type="submit" value="Submit" class= "btn btn-success btn btn-large submit_button_pos">										
+					</form>		        
+					<a href="/home">
+						<button class="btn btn-danger btn btn-default cancel_button_pos">Cancel</button>
+					</a>
+				</div>
+			</div>	
+		</div>
+    </body>
+</html>

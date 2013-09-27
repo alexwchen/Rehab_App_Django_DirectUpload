@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!-- saved from url=(0072)http://html5-demos.appspot.com/static/getusermedia/record-user-webm.html -->
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<title>record page</title> 
+		<meta name="description" content="Creating a 16 columns Grid with Twitter Bootstrap. Learn with examples to create a Grid System in Twitter Bootstrap."> 
+		<link href="/static_media_alex/bootstrap.css" rel="stylesheet"> 
+
+		<!-- Harrison Style -->
+		<link href="/static_media_alex/portal/portal.css" rel="stylesheet" type="text/css" />
+    </head>
+
+
+
+<!-- 
+#########################################################
+#########################################################
+
+	MAIN BODY STARTS
+
+#########################################################
+#########################################################
+-->
+
+<div class="container">
+	
+	<!-- LOGO + Title -->
+	<div class = "row">
+		<div class='span3'>
+			<img border = "0" src = "/static_media_alex/Rehab_logo.jpeg" width = "250" height = "180">
+		</div>
+		<div class = "span9">
+			<div id='rehab_title'> <!-- IATSL -->
+				<b><em>I.A.T.S.L.</em></b>
+				<br>
+				<br>
+				<p id="title"> <!-- full name of IATSL -->
+					Intelligent Assistive Technology and System Lab
+				</p>
+			</div>
+		</div>	
+	</div>
+	
+	
+	<!--article title box-->
+	<div class="form-horizontal">
+		<label id="article_title_text_before_options">
+			Articles: 
+		</lable>
+		
+		<select id='select_category'>
+			{% if article %}
+			    <ul>
+			    {% for articles in article %}
+			        <li>
+						<option>
+							{{ articles.title }}	
+						</option>
+					</li>
+			    {% endfor %}
+			    </ul>
+			{% else %}
+			    <p>No articles are available.</p>
+			{% endif %}
+		</select>
+			
+		<lable id="article_author_pos">
+			Author:
+			<lable id="article_author">{{ default.authors }} </lable>
+			
+		</lable>
+		
+		<a id='logout' href="/logout/">
+			<button class="btn btn-warning">LOGOUT</button>
+		</a>
+		
+	</div>
+	
+	
+	
+	
+	<section>
+      	<div class="span12_box">
+	    	<p class="article_justify_text">
+				{{ default.text }}
+	        </p>
+	    </div>
+	</section>
+
+<!--  
+########## Step 1  ############
+ -->
+	<div class="row">
+		<div class="span12">
+			<h2 class="steps_title">Step1: Record Audio</h2>
+		</div>
+	</div>
+	<section class="steps_outter_box">
+		<div class="row">
+			<div class="span12">
+				<p class="steps_instruction">Instruction:</p>
+				<ol class="instruction_list_font">
+					<li>Open this page in Google Chrome</li>
+					<li><span class="allow_button_for_Chrome"> Allow </span>the browser use your microphone</li>
+					<li>Pressed the green <span class="start_button_special_font"> RECORD </span>button to record</li>
+					<li>Read the article above the instruction</li>
+					<li>Pressed the red <span class="stop_button_special_font"> STOP </span>button to stop recording</li>
+				</ol>
+			</div>
+		</div>
+
+	 	<button onclick="startRecording(this)" class="btn btn-success btn-large" id="start_button">RECORD</button><button onclick="stopRecording(this)" disabled="" class="btn btn-danger btn-large" id="stop_button">STOP</button>		
+	
+	  	<ul id="recordingslist"></ul>
+	  	<pre id="log">
+Audio context OK 
+navigator.getUserMedia OK 
+		</pre>
+	</section>
+<!-- ################################### -->
+
+<!--  
+################ Step2 ###############
+-->
+	<div class="row">
+		<div class="span12">
+			<h2 class="steps_title">Step2: Upload File</h2>
+		</div>
+	</div>
+	
+	<section class="steps_outter_box">
+		<div class="row">
+			<div class="span12">
+				<h4 class="steps_instruction">Instruction:</h4>
+				<ol class="instruction_list_font">
+					<li>Stop recording</li>
+					<li>Pressed the blue <span class="upload_button_special_font"> UPLOAD </span>button to upload</li>
+				</ol>
+			</div>
+		</div>
+		<form id='hi' action="/portal/" method="post" enctype="multipart/form-data">	
+	        {% csrf_token %}
+			<p class="upload_help_text">{{ form.non_field_errors }} {{ form.docfile.help_text }}</p>
+	        <p>
+	            {{ form.docfile.errors }} 
+				<input type="submit" value="UPLOAD" class="btn btn-primary btn-large" id="upload_button"/>
+	            <button class="btn">{{ form.docfile }}</button>
+	        </p>
+	        <p></p> 
+	    </form>
+	</section>
+	
+	
+	
+	
+<!-- 
+################ step3 ##################
+-->
+	<div class="row">
+		<div class="span12">
+			<h2 class="steps_title">Step3: Get Scores</h2>
+		</div>
+	</div>
+	<section class="steps_outter_box">
+		<div class="row">
+			<div class="span12">
+				<h4 class="steps_instruction">Score:</h4>
+			</div>
+		</div>
+		<button class="btn btn-info btn-large analyze_button">ANALYZE</button>
+	</section>
+	<!-- ################################## -->
+</div>
+
+
+<!-- 
+#########################################################
+#########################################################
+
+	MAIN BODY ENDS
+
+#########################################################
+#########################################################
+-->
+
+
+<!-- portal script -->
+<script type='text/javascript' src="/static_media_alex/jquery.js"></script>
+<script src="/static_media_alex/portal/portal.js"></script>
+
+<!--audio script -->
+<script src="/static_media_alex/audio/recorder.js"></script>
+<script src="/static_media_alex/audio/audio_main.js"></script>
+
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22014378-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+</body>
+</head>
